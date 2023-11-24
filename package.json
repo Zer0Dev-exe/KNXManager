@@ -2,6 +2,7 @@
   "dependencies": {
     "ascii-table": "^0.0.9",
     "axios": "^1.6.2",
+    "brawlstars.js": "^1.2.3",
     "canvacord": "^5.4.10",
     "colors": "^1.4.0",
     "cpu-stat": "^2.0.1",
