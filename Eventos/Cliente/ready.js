@@ -116,7 +116,7 @@ client.on("raw", (d) => {
         setInterval(() => {
             const status = activities[Math.floor(Math.random() * activities.length)];
             client.user.setPresence({ 
-            status: 'idle',
+            status: 'dnd',
             activities: [{
                 type: ActivityType.Custom,
                 name: `Prueba`,

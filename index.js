@@ -14,7 +14,8 @@ const {
     EmbedBuilder,
     ChannelType,
     PermissionsBitField,
-    GatewayDispatchEvents
+    GatewayDispatchEvents,
+    AttachmentBuilder
   } = require("discord.js");
   
   const { loadEvents } = require("./Handlers/cargarEventos");
@@ -24,7 +25,9 @@ const {
   const token = process.env.TOKEN;
   const voiceData = new Collection();
   const { Riffy } = require("riffy");
+  const { welcomeCard } = require('greetify')
   const fs = require("fs");
+  const wait = require('node:timers/promises').setTimeout;
 
   process.on('unhandledRejection', async (reason, promise) => {
     console.log('Unhandled Rejection error at:', promise, 'reason', reason);
@@ -288,22 +291,27 @@ const {
     }
 })
 
-  client.on(Events.GuildMemberAdd, member => {
+  client.on(Events.GuildMemberAdd, async member => {
 
     if(member.guild.id === '698544143403581501') {
 
       const cantidad = client.guilds.cache.get('698544143403581501').memberCount
+      const vc = client.channels.cache.get('1086073757883432990')
 
-      const embed = new EmbedBuilder()
-      .setColor('#f3e8e8')
-      .setImage('https://media.discordapp.net/attachments/936591912079618089/1132784989407297617/Team_KNX_Bienvenidas.png?width=1024&height=341')
-      .setTitle(`${member.user.username} te damos la bienvenida a TeamKNX`)
-      .setDescription(`- Recuerda leer las <#700911264645513226>\n- En <#1016169722296938517> podrás encontrar información.`)
-      .setFooter({ text: `Miembro ${member.user.username} | ${cantidad} miembros`, iconURL: `${member.user.avatarURL()}`})
+      const card = new welcomeCard()
+      .setName(member.user.username)
+      .setAvatar(member.user.displayAvatarURL({ format: 'png' }))
+      .setMessage(`Atunero número ${cantidad}`)
+      .setBackground('https://media.discordapp.net/attachments/936591912079618089/1182024680882847915/Prueba_final.png?ex=65833144&is=6570bc44&hm=247a4be6b6967abbdb956c7560c8f37065f8246dbe934bcb12543d2318ec81fb&=&format=webp&quality=lossless&width=768&height=432')
+      .setColor('f9f9f9')
+      .setTitle('Bienvenido!')
+
+      const output = await card.build();
+      fs.writeFileSync("card.png", output);
 
       const canal = client.channels.cache.get('1023384595208601684')
 
-      canal.send({ content: `${member.user}`, embeds: [embed] })
+      canal.send({ files: [{ attachment: output, name: `${member.id}.png`}], content: `- ${member} Bienvenido a **Team KNX** <:knx:908715123034689596>\n- Recuerda leer las <#700911264645513226> <:KNX_PinGood:775086872850333726>\n- Visita <#1016169722296938517> para obtener información sobre el servidor <:KNX_PinThanks:775086795851038740>.` })
 
       member.roles.add('1023271152753319967') // Atunero
       member.roles.add('756836206083309568') // Colores
@@ -311,6 +319,19 @@ const {
       member.roles.add('729529480531542107') // Niveles
       member.roles.add('713630239363956806') // Basico
       member.roles.add('754816313775489154') // Autoroles
+
+      vc.setName(`Miembros: ${cantidad}`)
+    } else {
+      return;
+    }
+  })
+
+  client.on(Events.GuildMemberRemove, member => {
+
+    if(member.guild.id === '698544143403581501') {
+      const cantidad = client.guilds.cache.get('698544143403581501').memberCount
+      const vc = client.channels.cache.get('1086073757883432990')
+      vc.setName(`Miembros: ${cantidad}`)
     } else {
       return;
     }
@@ -464,3 +485,47 @@ const {
         }
     }
 });
+// RESETEO AUTOMATICO XP
+const msgLbSchema = require('./Schemas/msgLbSchema')
+
+async function servidor() {
+ var data = await msgLbSchema.find({ Guild: '698544143403581501' })
+ var standings = [];
+  
+ await data.forEach(async d => {
+    var miembro = await client.members.get(d.User);
+    standings.push({
+      user: d.User,
+      messages: d.Messages,
+      username: miembro.user.username
+    })
+ });
+
+ return standings
+}
+
+setInterval(async () => {
+  const userSchema = require('./Schemas/msgLbSchema')
+  const users = await userSchema.find({ Guild: '698544143403581501'}).sort({Messages: -1}).limit(10);
+ 
+  const embed = new EmbedBuilder()
+  .setTitle('Top de Experiencia')
+  .setDescription('A continuación se muestra el top de experiencia:')
+  .setColor('Random')
+  const data = await userSchema.findOne({ Guild: '698544143403581501'})
+
+  if(!data) {
+    return;
+  } else {
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+      const server = await client.guilds.cache.get('1145307912785383455')
+      const member = server.members.cache.get(user.User);
+      embed.addFields({ name: `${i + 1}. ${member ? member.displayName : 'Usuario desconocido'}`, value: `<:KNX_PinThanks:775086795851038740> Mensajes: \`${user.Messages}\`` });
+    }
+  
+   const canal = client.channels.cache.get('936594555715858442')
+   canal.send({ content: '<@&936405936610889738>', embeds: [embed], allowedMentions:{parse: ['users', 'roles'] } });
+   await userSchema.deleteMany()
+  }
+ }, 604800000);

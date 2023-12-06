@@ -120,14 +120,14 @@ module.exports = {
         
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica x 1.25 (X1.25)", "Se suman 5.500", "Se suman 10 cofres", "Todo o Nada Nivel 2", " Pierdes todo", "Se suman 4.500", "Se suman 7 cofres"]
+                const opciones = ['Sumas 5 cofres', 'Sumas 1 fragmento épico', 'Se multiplica por 1.5 (todo) ', 'Sumas 1 fragmento mítico',  'Sumas 500.000', 'Sumas 10 cofres', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 1 Ronda 1')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica x 1.25 (X1.25)\n- Se suman 5.500\n- Se suman 10 cofres\n- Todo o Nada Nivel 2\n- Pierdes todo\n- Se suman 4.500\n- Se suman 7 cofres` },
+                    { name: 'Opciones', value: `- Sumas 5 cofres\n- Sumas 1 fragmento épico\n- Se multiplica por 1.5 (todo)\n- Sumas 1 fragmento mítico\n- Sumas 500.000\n- Sumas 10 cofres\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fe263f')
@@ -173,14 +173,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica x 1.30 (X1.30)", "Se suman 5.500", "Se suman 10 cofres", "Todo o Nada Nivel 2", " Pierdes todo", "Se suman 4.500", "Se suman 7 cofres", "Pierdes todo"]
+                const opciones = ['Pierdes Todo', 'Sumas 1 fragmento épico', 'Se multiplica por 1.5 (todo)', 'Sumas 1 fragmento mítico', 'Sumas 500.000', 'Sumas 10 cofres', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 1 Ronda 2')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica x 1.30 (X1.30)\n- Se suman 5.500\n- Se suman 10 cofres\n- Todo o Nada Nivel 2\n- Pierdes todo\n- Se suman 4.500\n- Se suman 7 cofres\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes Todo\n- Sumas 1 fragmento épico\n- Se multiplica por 1.5 (todo)\n- Sumas 1 fragmento mítico\n- Sumas 500.000\n- Sumas 10 cofres\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fe263f')
@@ -226,14 +226,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica x 1.35 (X1.35)", "Se suman 5.500", "Se suman 10 cofres", "Todo o Nada Nivel 2", " Pierdes todo", "Se suman 4.500", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes Todo', 'Sumas 1 fragmento épico', 'Se multiplica por 1.5 (todo)', 'Sumas 1 fragmento mítico', 'Sumas 500.000', 'Sumas 10 cofres', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 1 Ronda 3')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica x 1.35 (X1.35)\n- Se suman 5.500\n- Se suman 10 cofres\n- Todo o Nada Nivel 2\n- Pierdes todo\n- Se suman 4.500\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes Todo\n- Sumas 1 fragmento épico\n- Se multiplica por 1.5 (todo)\n- Sumas 1 fragmento mítico\n- Sumas 500.000\n- Sumas 10 cofres\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fe263f')
@@ -279,14 +279,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica x 1.40 (X1.40)", "Se suman 5.500", "Se suman 10 cofres", "Todo o Nada Nivel 2", " Pierdes todo", "Pierdes todo", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes Todo', 'Pierdes todo', 'Se multiplica por 1.5 (todo)', 'Sumas 1 fragmento mítico', 'Sumas 500.000', 'Sumas 10 cofres', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 1 Ronda 4')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica x 1.40 (X1.40)\n - Se suman 5.500\n - Se suman 10 cofres\n - Todo o Nada Nivel 2\n - Pierdes todo\n - Pierdes todo\n - Pierdes todo\n - Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes Todo\n- Pierdes todo\n- Se multiplica por 1.5 (todo)\n- Sumas 1 fragmento mítico\n- Sumas 500.000\n- Sumas 10 cofres\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fe263f')
@@ -332,14 +332,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica x 1.5 (X1.5)", "Pierdes todo", "Se suman 10 cofres", "Todo o Nada Nivel 2", " Pierdes todo", "Pierdes todo", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes Todo', 'Pierdes todo', 'Se multiplica por 1.5 (todo)', 'Sumas 1 fragmento mítico', 'Sumas 500.000', 'Pierdes todo', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 1 Ronda 5')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica x 1.5 (X1.5)\n- Pierdes todo\n- Se suman 10 cofres\n- Todo o Nada Nivel 2\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes Todo\n- Pierdes todo\n- Se multiplica por 1.5 (todo)\n- Sumas 1 fragmento mítico\n- Sumas 500.000\n- Pierdes todo\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fe263f')
@@ -385,14 +385,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["600.000 + 15 cofres", "Pierdes todo", "Pierdes todo", "Pierde todo", "Pierdes todo","Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes Todo', 'Pierdes todo', 'Se multiplica por 1.5 (todo)', 'Pierdes todo', 'Pierdes todo', 'Pierdes todo', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 1 Ronda 6')
                 .addFields(
-                    { name: 'Opciones', value: `- 600.000 + 15 cofres\n- Pierdes todo\n- Pierdes todo\n- Pierde todo\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes Todo\n- Pierdes todo\n- Se multiplica por 1.5 (todo)\n-Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fe263f')
@@ -442,14 +442,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica por 1.5 (X1.5)", "Se suman 7.000", "Se suman 7 cofres", "Todo o nada Nivel 3", "Pierdes todo", "Se suman 6.500", "Se suman 10 cofres"]
+                const opciones = ['Sumas 750.000', 'Sumas 10 cofres', 'Se multiplica por 2 (todo) ', 'Sumas 2 fragmentos épicos', 'Pierdes todo', 'Sumas 1.000.000', 'Sumas 1 fragmento legendario']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 2 Ronda 1')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica por 1.5 (X1.5)\n- Se suman 7.000\n- Se suman 7 cofres\n- Todo o nada Nivel 3\n- Pierdes todo\n- Se suman 6.500\n- Se suman 10 cofres` },
+                    { name: 'Opciones', value: `- Sumas 750.000\n- Sumas 10 cofres\n- Se multiplica por 2 (todo)\n- Sumas 2 fragmentos épicos\n- Pierdes todo\n- Sumas 1.000.000\n- Sumas 1 fragmento legendario` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#64f09e')
@@ -495,14 +495,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Pierdes todo", "Se multiplica por 1.75 (X1.75)", "Se suman 8.500", "Se suman 15 cofres", "Todo o nada Nivel 3", "Pierdes todo", "Se suman 7.500"]
+                const opciones = ['Pierdes todo', 'Sumas 10 cofres', 'Se multiplica por 2 (todo)', 'Sumas 2 fragmentos épicos', 'Pierdes todo', 'Sumas 1.000.000', 'Sumas 1 fragmento legendario']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 2 Ronda 2')
                 .addFields(
-                    { name: 'Opciones', value: `- Pierdes todo\n- Se multiplica por 1.75 (X1.75)\n- Se suman 8.500\n- Se suman 15 cofres\n- Todo o nada Nivel 3\n- Pierdes todo\n- Se suman 7.500` },
+                    { name: 'Opciones', value: `- Pierdes todo\n- Sumas 10 cofres\n- Se multiplica por 2 (todo)\n- Sumas 2 fragmentos épicos\n- Pierdes todo\n- Sumas 1.000.000\n- Sumas 1 fragmento legendario` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#64f09e')
@@ -548,14 +548,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica por 2.25 (X2.25)", "Se suman 9.000", "Se suman 18 cofres", "Pierdes todo", "Se suman 12.000", "Se suman 25 cofres", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes todo', 'Pierdes todo', 'Se multiplica por 2 (todo) ', 'Sumas 2 fragmentos épicos', 'Pierdes todo', 'Sumas 1.000.000', 'Sumas 1 fragmento legendario']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 2 Ronda 3')
                 .addFields(
-                    { name: 'Opciones', value: `Pierdes todo\n- Se multiplica por 1.75 (X1.75)\n- Se suman 8.500\n- Se suman 15 cofres\n- Todo o nada Nivel 3\n- Pierdes todo\n- Se suman 7.500\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes todo\n- Pierdes todo\n- Se multiplica por 2 (todo)\n- Sumas 2 fragmentos épicos\n- Pierdes todo\n- Sumas 1.000.000\n- Sumas 1 fragmento legendario` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#64f09e')
@@ -601,14 +601,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica por 2.25 (X2.25)", "Se suman 9.000", "Se suman 18 cofres", "Pierdes todo", "Se suman 12.000", "Se suman 25 cofres", "Pierdes todo", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes todo', 'Pierdes todo', 'Se multiplica por 2 (todo) ', 'Sumas 2 fragmentos épicos', 'Pierdes todo', 'Pierdes todo', 'Sumas 1 fragmento legendario']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 2 Ronda 4')
                 .addFields(
-                    { name: 'Opciones', value: `Pierdes todo\n- Se multiplica por 2 (X2)\n- Se suman 8.500\n- Se suman 15 cofres\n- Todo o nada Nivel 3\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes todo\n- Pierdes todo\n- Se multiplica por 2 (todo)\n- Sumas 2 fragmentos épicos\n- Pierdes todo\n- Pierdes todo\n- Sumas 1 fragmento legendario` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#64f09e')
@@ -654,14 +654,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Pierdes todo", "Se multiplica por 2 (X2)", "Se suman 7.000", "Se suman 20 cofres", "Todo o nada Nivel 3", "Pierdes todo", "Se suman 6.500", "Pierdes todo", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes todo', 'Pierdes todo', 'Se multiplica por 2 (todo) ', 'Pierdes todo', 'Pierdes todo', 'Pierdes todo', 'Sumas 1 fragmento legendario']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 2 Ronda 5')
                 .addFields(
-                    { name: 'Opciones', value: `- Pierdes todo\n- Se multiplica por 2 (X2)\n- Se suman 7.000\n- Se suman 20 cofres\n- Todo o nada Nivel 3\n- Pierdes todo\n- Se suman 6.500\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes todo\n- Pierdes todo\n- Se multiplica por 2 (todo)\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Sumas 1 fragmento legendario` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#64f09e')
@@ -707,14 +707,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["885.000 + 20 cofres", "Pierdes todo", "Pierdes todo", "Pierdes todo", "Pierdes todo", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes todo', 'Pierdes todo', 'Se multiplica por 2 (todo) ', 'Pierdes todo', 'Pierdes todo', 'Pierdes todo', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 2 Ronda 6')
                 .addFields(
-                    { name: 'Opciones', value: `- 885.000 + 20 cofres\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes todo\n- Pierdes todo\n- Se multiplica por 2 (todo)\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#64f09e')
@@ -764,14 +764,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica por 1.75 (X1.75)", "Se suman 9.000", "Se suman 18 cofres", "Pierdes todo", "Se suman 7.500", "Se suman 25 cofres"]
+                const opciones = ['Sumas 1.500.000 + 5 cofres', 'Sumas 1 fragmento arcoíris', 'Sumas 2 fragmentos míticos', 'Se multiplica por 2.5 (todo)', 'Sumas 2 fragmentos legendarios', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 3 Ronda 1')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica por 1.75 (X1.75)\n- Se suman 9.000\n- Se suman 18 cofres\n- Pierdes todo\n- Se suman 7.500\n- Se suman 25 cofres` },
+                    { name: 'Opciones', value: `- Sumas 1.500.000 + 5 cofres\n- Sumas 1 fragmento arcoíris\n- Sumas 2 fragmentos míticos\n- Se multiplica por 2.5 (todo)\n- Sumas 2 fragmentos legendarios\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fa5255')
@@ -817,14 +817,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica por 2 (X2)", "Se suman 9.000", "Se suman 18 cofres", "Pierdes todo", "Se suman 12.000", "Se suman 25 cofres", "Pierdes todo"]
+                const opciones = ['Sumas 1.500.000 + 5 cofres', 'Sumas 1 fragmento arcoíris', 'Pierdes todo', 'Se multiplica por 2.5 (todo)', 'Sumas 2 fragmentos legendarios', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 3 Ronda 2')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica por 2 (X2)\n- Se suman 9.000\n- Se suman 18 cofres\n- Pierdes todo\n- Se suman 12.000\n- Se suman 25 cofres\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Sumas 1.500.000 + 5 cofres\n- Sumas 1 fragmento arcoíris\n- Pierdes todo\n- Se multiplica por 2.5 (todo)\n- Sumas 2 fragmentos legendarios\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fa5255')
@@ -870,14 +870,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica por 2.25 (X2.25)", "Se suman 9.000", "Se suman 18 cofres", "Pierdes todo", "Se suman 12.000", "Se suman 25 cofres", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes todo', 'Sumas 1 fragmento arcoíris', 'Pierdes todo', 'Se multiplica por 2.5 (todo)', 'Sumas 2 fragmentos legendarios', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 3 Ronda 3')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica por 2.25 (X2.25)\n- Se suman 9.000\n- Se suman 18 cofres\n- Pierdes todo\n- Se suman 12.000\n- Se suman 25 cofres\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes todo\n- Sumas 1 fragmento arcoíris\n- Pierdes todo\n- Se multiplica por 2.5 (todo)\n- Sumas 2 fragmentos legendarios\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fa5255')
@@ -923,14 +923,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica por 2.25 (X2.25)", "Se suman 9.000", "Se suman 18 cofres", "Pierdes todo", "Se suman 12.000", "Se suman 25 cofres", "Pierdes todo", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes todo', 'Sumas 1 fragmento arcoíris', 'Pierdes todo', 'Se multiplica por 2.5 (todo)', 'Pierdes todo', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 3 Ronda 4')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica por 2.25 (X2.25)\n- Se suman 9.000\n- Se suman 18 cofres\n- Pierdes todo\n- Se suman 12.000\n- Se suman 25 cofres\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes todo\n- Sumas 1 fragmento arcoíris\n- Pierdes todo\n- Se multiplica por 2.5 (todo)\n- Pierdes todo\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fa5255')
@@ -976,14 +976,14 @@ module.exports = {
 
                 const { options } = interaction;
         
-                const opciones = ["Se multiplica por 2.5 (X2.5)", "Se suman 9.000", "Se suman 18 cofres", "Pierdes todo", "Se suman 12.000", "Se suman 25 cofres", "Pierdes todo", "Pierdes todo", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes todo', 'Pierdes todo', 'Pierdes todo', 'Se multiplica por 2.5 (todo)', 'Pierdes todo', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 3 Ronda 5')
                 .addFields(
-                    { name: 'Opciones', value: `- Se multiplica por 2.5 (X2.5)\n- Se suman 9.000\n- Se suman 18 cofres\n- Pierdes todo\n- Se suman 12.000\n- Se suman 25 cofres\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Se multiplica por 2.5 (todo)\n- Pierdes todo\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fa5255')
@@ -1029,14 +1029,14 @@ module.exports = {
                 
                 const { options } = interaction;
         
-                const opciones = ["1.200.000 y 50 cofres", "Pierdes todo", "Pierdes todo", "Pierdes todo", "Pierdes todo", "Pierdes todo", "Pierdes todo"]
+                const opciones = ['Pierdes todo', 'Pierdes todo', 'Pierdes todo', 'Se multiplica por 3 (todo)', 'Pierdes todo', 'Pierdes todo']
         
                 const ball = Math.floor(Math.random() * opciones.length);
         
                 const embed = new EmbedBuilder()
                 .setTitle('Todo o Nada Nivel 3 Ronda 6')
                 .addFields(
-                    { name: 'Opciones', value: `- 1.200.000 y 50 cofres\n- Pierdes todo\n- Pierdes todo"\n- Pierdes todo"\n- Pierdes todo\n- Pierdes todo\n- Pierdes todo` },
+                    { name: 'Opciones', value: `- Pierdes todo\n- Pierdes todo\n- Pierdes todo\n- Se multiplica por 3 (todo)\n- Pierdes todo\n- Pierdes todo` },
                     { name: 'Organizado Por:', value: `- ${interaction.user}` }
                 )
                 .setColor('#fa5255')
