@@ -118,7 +118,5 @@ module.exports = {
 
         interaction.reply({ embeds: [embed], components: [boton, boton2]})
       }
-
-      //interaction.reply({ embeds: [embed]})
   } 
 }

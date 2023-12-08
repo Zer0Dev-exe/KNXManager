@@ -30,6 +30,11 @@ module.exports = {
         .setName('millonaria')
         .setDescription('Ruleta de Tickets Millonaria')
     )
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('fragmentos')
+        .setDescription('Ruleta de Fragmentos')
+    )
     ,
     async execute(interaction) {
 
@@ -287,6 +292,60 @@ module.exports = {
             .setLabel('Rula la bola')
             .setStyle(ButtonStyle.Danger)
             .setEmoji('1164622789047750746')
+            .setDisabled(true)
+            )
+
+            const msg = await interaction.reply({ embeds: [embed], components: [boton] });
+
+            const collector = msg.createMessageComponentCollector()
+
+            collector.on('collect', async i => {
+
+                if (i.customId == 'ruleta' ) {
+                    i.update({ embeds: [embed2], components: [boton2]})
+                }
+            })
+
+        } else if(interaction.options.getSubcommand() === 'fragmentos') {
+
+            const { options } = interaction;
+
+            const opciones = ['10 fragmentos comunes', '8 fragmentos especiales', '7 fragmentos épicos', '4 fragmentos míticos', '1 fragmento legendario', '2 fragmentos comunes', '3 fragmentos especiales', '5 fragmentos épicos', '2 fragmentos míticos', '1 fragmento común', '1 fragmento arcoíris', '4 fragmentos especiales', '6 fragmentos comunes', '5 fragmentos míticos', '1 fragmento legendario', '1 fragmento mítico']
+
+            const ball = Math.floor(Math.random() * opciones.length);
+
+            const embed = new EmbedBuilder()
+            .setTitle('Ruleta de Fragmentos')
+            .setFooter({ text: 'Puedes encontrar cosas misteriosas!'})
+            .setColor('Random')
+            .addFields(
+                { name: 'Opciones', value: `- 10 fragmentos comunes\n- 8 fragmentos especiales\n- 7 fragmentos épicos\n- 4 fragmentos míticos\n- 1 fragmento legendario\n- 2 fragmentos comunes\n- 3 fragmentos especiales\n- 5 fragmentos épicos\n- 2 fragmentos míticos\n- 1 fragmento común\n- 1 fragmento arcoíris\n- 4 fragmentos especiales\n- 6 fragmentos comunes\n- 5 fragmentos míticos\n- 1 fragmento legendario\n- 1 fragmento mítico` },
+                { name: 'Organizado Por:', value: `- ${interaction.user}` }
+            )
+
+            const embed2 = new EmbedBuilder()
+            .setTitle('Ruleta de Fragmentos')
+            .addFields({
+                name: 'Premioo!', value: `- ${opciones[ball]}`
+            })
+            .setColor('Random')
+
+            const boton = new ActionRowBuilder()
+            .addComponents(
+            new ButtonBuilder()
+            .setCustomId('ruleta')
+            .setLabel('Rula la bola')
+            .setStyle(ButtonStyle.Danger)
+            .setEmoji('775086872850333726')
+            )
+
+            const boton2 = new ActionRowBuilder()
+            .addComponents(
+            new ButtonBuilder()
+            .setCustomId('ruleta')
+            .setLabel('Rula la bola')
+            .setStyle(ButtonStyle.Danger)
+            .setEmoji('775086872850333726')
             .setDisabled(true)
             )
 

@@ -1,4 +1,4 @@
-const { CommandInteraction, EmbedBuilder, ActionRowBuilder, PermissionFlagsBits, ButtonBuilder, ButtonStyle, TextInputStyle, ChannelType, PermissionsBitField, ModalBuilder, TextInputBuilder, CommandInteractionOptionResolver } = require("discord.js");
+const { CommandInteraction, EmbedBuilder, ActionRowBuilder, PermissionFlagsBits, ButtonBuilder, ButtonStyle, TextInputStyle, ChannelType, PermissionsBitField, ModalBuilder, TextInputBuilder, CommandInteractionOptionResolver, InteractionResponse } = require("discord.js");
 const blacklist = require('../../Schemas/blacklist');
 const ticketDiscord = require('../../Schemas/ticketDiscordSchema.js')
 const ticketTwitch = require('../../Schemas/ticketTwitchSchema.js')
@@ -1256,6 +1256,30 @@ module.exports = {
           await wait(2000)
           await interaction.editReply({ content: 'Listo', ephemeral: true })
         }
+      } else if (interaction.customId == "lista-miembros") {
+
+        require('dotenv').config()
+        const token = process.env.APITOKEN
+        const BrawlStars = require("brawlstars.js")
+        const cliente = new BrawlStars.Client(token)
+        const club = await cliente.getClub('#CV8QU2VC')
+        
+        const miembrosplus = club.members.sort((a, b) => b.trophies - a.trophies)
+
+        const membersField = miembrosplus.map((member) => {
+          const { name, trophies } = member
+          return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+        }).join('\n')
+
+        const embed = new EmbedBuilder()
+        .setTitle('Miembros Club KNX')
+        .setDescription(membersField)
+        .setColor('#b96eff')
+        .setThumbnail(`${interaction.guild.iconURL()}`)
+        .setFooter({ text: 'Esta es la lista extraida del Club', iconURL: `${interaction.guild.iconURL()}`})
+
+        interaction.reply({ embeds: [embed], ephemeral: true  })
+
       } else {
         return;
       }

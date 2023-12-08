@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const mongodbURL = process.env.MONGODBURL;
 const wait = require('node:timers/promises').setTimeout;
 var colors = require('colors');
+const { musicCard } = require('musicard')
 const { Riffy } = require("riffy");
 // keep yourself safe
 module.exports = {
@@ -19,9 +20,9 @@ module.exports = {
         if (!mongodbURL) return;
         const nodes = [
             {
-                host: "localhost",
-                password: "totorile18",
-                port: "2333",
+                host: "185.255.5.126",
+                password: "blubpubliclava",
+                port: "5500",
                 secure: false
             },
           ];
@@ -58,18 +59,21 @@ client.riffy.on("trackStart", async (player, track) => {
     const horas = Math.floor(tiempo / 3600000) % 24
     const minutos = Math.floor(tiempo / 60000) % 60
     const segundos = Math.floor(tiempo / 1000) % 60
-
-        
-    const embed2 = new EmbedBuilder()
-    .setDescription('Test')
-    .setColor(`#41ecfa`)
-    .addFields(
-        { name: 'Cantante', value: `${track.info.author}`, inline: true },
-        { name: `Duración`, value: `${horas} Horas ${minutos} Minutos y ${segundos} Segundos`, inline: true }
-    )
-    .setDescription(`## Ahora reproduciendo:\n ${track.info.title}`)
+  
+    const card = new musicCard()
+    .setName(`${track.info.title}`)
+    .setAuthor(`By ${track.info.author}`)
+    .setColor("auto") // or hex color without # (default: auto) (auto: dominant color from thumbnail)
+    .setBrightness(50)
     .setThumbnail(`${url}`)
-    channel.send({ embeds: [embed2]});
+    .setProgress(0)
+    .setStartTime("0:00")
+    .setEndTime(`${minutos}:${segundos}`)
+
+    const cardBuffer = await card.build();
+    fs.writeFileSync(`musicCard.png`, cardBuffer);
+
+    channel.send({ files: [card]});
 });
 
 // This is the event handler for queue end.
@@ -116,7 +120,7 @@ client.on("raw", (d) => {
         setInterval(() => {
             const status = activities[Math.floor(Math.random() * activities.length)];
             client.user.setPresence({ 
-            status: 'dnd',
+            status: 'idle',
             activities: [{
                 type: ActivityType.Custom,
                 name: `Prueba`,
