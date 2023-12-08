@@ -91,7 +91,7 @@ const {
       .setName(member.user.username)
       .setAvatar(member.user.displayAvatarURL({ format: 'png' }))
       .setMessage(`Atunero número ${cantidad}`)
-      .setBackground('https://media.discordapp.net/attachments/936591912079618089/1182024680882847915/Prueba_final.png?ex=65833144&is=6570bc44&hm=247a4be6b6967abbdb956c7560c8f37065f8246dbe934bcb12543d2318ec81fb&=&format=webp&quality=lossless&width=768&height=432')
+      .setBackground('https://media.discordapp.net/attachments/936591912079618089/1182724414744318172/Plantilla_KNXSecond.png?ex=6585bcf2&is=657347f2&hm=1715a710ed7939c3845acea0d5dc7d181150b6996a5d96a9d467461973b03d9c&=&format=webp&quality=lossless&width=768&height=432')
       .setColor('f9f9f9')
       .setTitle('Bienvenido!')
 
