@@ -251,9 +251,16 @@ const {
   })
 
   client.on(Events.MessageCreate, async (message) => {
+    if (message.content.includes('Sia')){
+      if(message.author.id === '946554175037276190') return;
+      message.reply({ content: 'Odiar a Sia es significado de saber de música.'})
+    } else if (message.content.includes('Coneja')){
+      if(message.author.id === '946554175037276190') return;
+      message.reply({ content: 'Odiar a Sia es significado de saber de música.'})
+    }
     if (message.content === 'restart') {
         if (message.member.roles.cache.has("725731790333149197")) {
-            require("child_process").exec("pm2 restart 2");
+            require("child_process").exec("pm2 restart 4");
             
             const embed = new EmbedBuilder()
                 .setTitle(`Reiniciando Knx Manager`)
