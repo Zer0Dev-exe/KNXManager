@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const axios = require('axios');
+const fetch = require('node-fetch')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,15 +18,15 @@ module.exports = {
         const mensaje = interaction.options.getString('mensaje');
 
         
-        const apiUrl = `https://ts.azury.cc/api/v1/gp4?q=${encodeURIComponent(mensaje)}`;
+        const response = await fetch(`https://ts.azury.cc/api/v1/gpt3?apiKey=zer0isgay&content=${encodeURIComponent(mensaje)}`)
 
         try {
             
-            const response = await axios.get(apiUrl);
+            const responseData = await response.json()
 
             
             if (response.status === 200) {
-                const chatData = response.data.chat; 
+                const chatData = responseData?.result
 
                 
                 const embed = new EmbedBuilder()
