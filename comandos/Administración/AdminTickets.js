@@ -7,6 +7,7 @@ const ticketSorteo = require('../../Schemas/ticketSorteoSchema.js')
 const ticketDiscord = require('../../Schemas/ticketDiscordSchema.js')
 const ticketTwitch = require('../../Schemas/ticketTwitchSchema.js')
 const ticketDrop = require('../../Schemas/ticketDropSchema.js')
+const ticketSync = require('../../Schemas/ticketSupSync.js')
 const { createTranscript } = require('discord-html-transcripts');
 
 const wait = require('node:timers/promises').setTimeout;
@@ -413,6 +414,44 @@ module.exports = {
                 await ticketDiscord.deleteMany({guildId: interaction.guild.id, channelId: interaction.channel.id})
                 await ticketTwitch.deleteMany({guildId: interaction.guild.id, channelId: interaction.channel.id})
                 await canalPost.send({ embeds: [log], components: [boton] })
+                await espera(10000)
+                await interaction.channel.delete()
+                
+            } else if(interaction.channel.parentId == "1186069945528893511") { // SYNC
+
+                if(!interaction.member.roles.cache.has("713630122141286440")) return interaction.reply({ content: "No tienes suficientes permisos, necesitas tener <@&725731790333149197>.", ephemeral: true })
+
+                const transcript = await createTranscript(interaction.channel, {
+                    limit: -1,
+                    returnBuffer: false,
+                    filename: `${interaction.channel.name}.html`,
+                });
+
+                const log = new EmbedBuilder()
+                    .setTitle(`Ticket cerrado por ${interaction.user.username}`)
+                    .addFields(
+                        { name: 'Nombre', value: `${interaction.channel.name}`}
+                    )
+                    .setTimestamp()
+                
+                const msg = await canalLogs.send({ files: [transcript]})
+
+                const boton = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                        .setLabel('Abrir')
+                        .setURL(`https://mahto.id/chat-exporter?url=${msg.attachments.first()?.url}`)
+                        .setStyle(ButtonStyle.Link),
+    
+                        new ButtonBuilder()
+                        .setLabel('Descargar')
+                        .setURL(`${msg.attachments.first()?.url}`)
+                        .setStyle(ButtonStyle.Link)
+                    )
+
+                interaction.reply({ content: 'Eliminando canal en 10segundos' })
+                await ticketSync.deleteMany({guildId: interaction.guild.id, channelId: interaction.channel.id})
+                await canalLogs.send({ embeds: [log], components: [boton] })
                 await espera(10000)
                 await interaction.channel.delete()
                 

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const lb = require('../../Schemas/msgLbSchema');
+const { totalCores } = require('cpu-stat');
 const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
@@ -83,24 +84,29 @@ module.exports = {
                 else {
                     var clasificacion = await servidor();
                     clasificacion.sort((a, b) => b.messages - a.messages);
-                    var output = clasificacion.slice(0, 10);
+                    var output = clasificacion.slice(0, 11);
 
+                    var embed = new EmbedBuilder()
+                    .setColor('#48c79d')
+                    .setTitle(`Clasificación de ${interaction.guild.name}`)
+                    .setThumbnail(interaction.guild.iconURL())
+                    .setImage('https://media.discordapp.net/attachments/936591912079618089/1185725840672165959/Proyecto_nuevo_1.png?ex=6590a83e&is=657e333e&hm=cb2519980f66e508c74b83decc902ba1ee41cd9cd034dfd2a73d8681d881f526&=&format=webp&quality=lossless&width=560&height=160')
                     var string;
                     var num = 1;
+                    var totalXp = 0;
                     await output.forEach(async value => {
                         const miembro = await interaction.guild.members.cache.get(value.user);
-                        string += `#${num} Miembro: **${miembro.user.username}**, Mensajes: \`${value.messages}\`\n`;
+                        string += `<a:Estrellas10:1156946836691619930> **${num}. ${miembro.user.displayName}**\n \`${value.messages}\`\n`;
+                        totalXp += value.messages; // Sum all the xp of users
                         num++;
                     });
-
                     string = string.replace('undefined', '');
+                    embed.setDescription(string);
+                    embed.addFields(
+                        { name: '<a:Estrellas4:1074117320865230919> Cantidad Total Mensajes', value: `\`${totalXp}\``, inline: true }
+                    );
 
-                    const embed = new EmbedBuilder()
-                    .setColor('Blurple')
-                    .setTitle(`Clasificación de ${interaction.guild.name}`)
-                    .setDescription(`${string}`)
-
-                    await interaction.reply({ embeds: [embed] })
+                    await interaction.reply({ embeds: [embed] });
                 }
             break;
             case 'reset':

@@ -15,6 +15,7 @@
     "mathjs": "^12.1.0",
     "mongoose": "^6.4.6",
     "musicard": "^1.5.2",
+    "puppeteer": "^21.6.1",
     "riffy": "^1.0.3"
   },
   "name": "knxmanager",

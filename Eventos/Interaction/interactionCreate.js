@@ -4,6 +4,8 @@ const ticketDiscord = require('../../Schemas/ticketDiscordSchema.js')
 const ticketTwitch = require('../../Schemas/ticketTwitchSchema.js')
 const dropSchema = require('../../Schemas/dropSchema.js')
 const tDrop = require('../../Schemas/ticketDropSchema.js')
+const syncSchema = require('../../Schemas/syncSchema.js')
+const ticketSupSchema = require('../../Schemas/ticketSupSync.js')
 
 const wait = require('node:timers/promises').setTimeout;
 
@@ -1253,7 +1255,6 @@ module.exports = {
                 const msg = await channel.send({ embeds: [embed], content: `${interaction.user}\n<@&713630122141286440>`, allowedMentions:{parse: ['users', 'roles'] } }).then((msg) => msg.pin())
               })
           await dropSchema.deleteMany({ guildId: interaction.guild.id})
-          await wait(2000)
           await interaction.editReply({ content: 'Listo', ephemeral: true })
         }
       } else if (interaction.customId == "lista-miembros") {
@@ -1279,6 +1280,149 @@ module.exports = {
         .setFooter({ text: 'Esta es la lista extraida del Club', iconURL: `${interaction.guild.iconURL()}`})
 
         interaction.reply({ embeds: [embed], ephemeral: true  })
+      // SYNC BRAWL
+
+      } else if (interaction.customId == "sync") {
+
+        const BrawlStars = require("brawlstars.js")
+        const token = process.env.APITOKEN
+        const cliente = new BrawlStars.Client(token)
+
+        const modal = new ModalBuilder({
+          customId: `sync-${interaction.user.id}`,
+          title: 'Sincronizar Cuenta',
+        })
+
+        const sync = new TextInputBuilder({
+          customId: 'sincronizar-cuenta',
+          label: "Tu Id sin #",
+          style: TextInputStyle.Short,
+        })
+
+        const firstActionRow = new ActionRowBuilder().addComponents(sync)
+
+        modal.addComponents(firstActionRow);
+
+        await interaction.showModal(modal)
+
+        // Esperar
+        const filter = (interaction) => interaction.customId === `sync-${interaction.user.id}`
+
+        interaction
+        .awaitModalSubmit({ filter, time: 300_000 })
+        .then (async(modalInteraction)=> {
+          const syncr = modalInteraction.fields.getTextInputValue('sincronizar-cuenta')
+          const data = await syncSchema.findOne({ usuariobs: `#${syncr}`})
+          let player
+          try {
+            if(!data) {
+              const exito = client.channels.cache.get('1186059658411126804')
+              const syncresult = modalInteraction.fields.getTextInputValue('sincronizar-cuenta')
+              const player = await cliente.getPlayer(`#${syncresult}`)
+              const fecha = Date.now()
+              interaction.member.roles.add('1186066304080298004')
+              interaction.member.setNickname(`${player.name}`)
+              await syncSchema.create({
+                usuariodc: interaction.user.id,
+                usuariobs: player.tag,
+                fecha: fecha
+              })
+              const embed = new EmbedBuilder()
+              .setTitle(`<a:Estrellas10:1156946836691619930> Verificación Completada <a:Estrellas10:1156946836691619930>`)
+              .setAuthor({ name: `${player.name} ${player.tag}`, iconURL: `https://cdn-old.brawlify.com/profile/${player.icon}.png`})
+              .setColor(player.hexColor)
+              .addFields(
+                { name: 'Trofeos', value: `<:reseteo:1178100588114882652> ${player.trophies}`, inline: true },
+                { name: 'Max Trofeos', value: `<:trofeosmasaltos:1178100593181601812> ${player.highestTrophies}`, inline: true },
+                { name: 'Nivel', value: `<:nivel:1178100580888088586> ${player.expLevel}`, inline: true },
+              )
+              .setThumbnail(`https://cdn-old.brawlify.com/profile/${player.icon}.png`)
+
+              const success = new EmbedBuilder()
+              .setTitle('Verificación Exitosa')
+              .setAuthor({ name: `${player.name} ${player.tag}`, iconURL: `https://cdn-old.brawlify.com/profile/${player.icon}.png`})
+              .addFields(
+                { name: 'Usuario', value: `${interaction.user.displayName}`},
+                { name: 'Id', value: `${interaction.user.id}`},
+                { name: 'Bs Tag', value: `${syncresult}`},
+              )
+              .setThumbnail(`https://cdn-old.brawlify.com/profile/${player.icon}.png`)
+              .setColor('Green')
+              exito.send({ embeds: [success]})
+              modalInteraction.reply({ embeds: [embed], ephemeral: true })
+            } 
+            if(data) {
+              await modalInteraction.reply({ content: `Ya hay un usuario verificado con **${data.usuariobs}**`, ephemeral: true })
+            }
+
+          } catch {
+            const syncresult = modalInteraction.fields.getTextInputValue('sincronizar-cuenta')
+            const canal = client.channels.cache.get('1186059658411126804')
+            const embed = new EmbedBuilder()
+            .setTitle('Verificación Fallada')
+            .addFields(
+              { name: 'Usuario', value: `${interaction.user.displayName}`},
+              { name: 'Id', value: `${interaction.user.id}`},
+              { name: 'Bs Tag', value: `${syncresult}`},
+            )
+            .setColor('Red')
+            await canal.send({ embeds: [embed]})
+            await modalInteraction.reply({ content: 'Esta ID no es valida, si crees que es un error o estás desubicado porfavor pulse en Soporte Sincronización para que un Staff te ayude.', ephemeral: true})
+          }
+        })
+      } else if (interaction.customId == "member") {
+
+        const canal = client.channels.cache.get('1186059658411126804')
+        await interaction.member.roles.add('1023271152753319967')
+        const embed = new EmbedBuilder()
+        .setTitle('Verificación Limitada')
+        .setDescription(`Con este tipo de acesso podrás ver los canales de charla del servidor pero no podrás usar el bot de **KNX Manager** para ver tus estadisticas de Brawl o para acceder a la sala de buscar partida automatizada.`)
+        .setColor('Blurple')
+        await canal.send({ content: `**${interaction.user.displayName}/${interaction.user.id}** se ha verificado sin tag de Brawl Stars.`})
+        await interaction.reply({ embeds: [embed], ephemeral: true })
+
+      } else if (interaction.customId == "sup-sync") {
+        const data = await ticketSupSchema.findOne({ openBy: interaction.user.id })
+        if(data) {
+          interaction.reply({ content: `Ya tienes un ticket abierto`, ephemeral: true })
+        } else {
+          await interaction.guild.channels.create({
+              name:`🧩・sync-${interaction.user.username}`,
+              type:ChannelType.GuildText,
+              parent:'1186069945528893511',
+              permissionOverwrites: [
+                  {
+                      id: interaction.guild.roles.everyone.id,
+                      deny:[PermissionFlagsBits.ViewChannel]
+                  },
+                  {
+                      id: interaction.member.id,
+                      allow:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory]
+                  },
+                  {
+                      id: '713630122141286440',
+                      allow:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ReadMessageHistory, PermissionFlagsBits.SendMessages]
+                  },
+
+              ],
+          }).then(async (channel) => {
+              await ticketSupSchema.create({
+                guildId: interaction.guild.id,
+                membersId: interaction.member.id,
+                channelId: channel.id,
+                openBy: interaction.user.id,
+              })
+              const embed = new EmbedBuilder()
+              .setColor("#14d2f0")
+              .setDescription(`## Ticket de ${interaction.user.username}\n\n<a:Estrellas10:1156946836691619930> En un momento un staff atenderá tu ticket, de mientras tanto proporcianos porfavor tu tag de Brawl para ver como podemos resolver tu problema, recuerda que solo pedimos numeros y letras, si has puesto con **#** ya sabes como corregir ahora. <a:Estrellas10:1156946836691619930>`)
+              .setThumbnail(`${interaction.user.avatarURL()}`)
+              .setFooter({ text: `Sistema de Tickets de ${interaction.guild.name}`, iconURL: `${interaction.guild.iconURL()}` })
+
+              interaction.reply({ content: `Tu ticket ha sido exitosamente creado en ${channel}`, ephemeral: true })
+
+              await channel.send({ content: `${interaction.user} <@&713630122141286440>`, embeds: [embed], allowedMentions:{parse: ['users', 'roles'] } })
+          })
+        }
 
       } else {
         return;

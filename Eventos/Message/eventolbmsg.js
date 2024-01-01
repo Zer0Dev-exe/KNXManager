@@ -4,7 +4,7 @@ module.exports = {
     name: 'messageCreate',
     async execute(message, client) {
         if(message.author.bot) return;
-        if (message.channel.id !== '1023384595208601684') return;
+        if(message.channel.id !== '1023384595208601684') return;
         var data = await lb.findOne({ Guild: message.guild.id, User: message.author.id })
         if(!data) {
             await lb.create({

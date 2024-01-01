@@ -13,7 +13,7 @@ module.exports = {
 
   async execute(interaction, client) {
     await interaction.deferReply({ content: 'Obteniendo las estadisticas de este usuario, actualizando mensaje...' })
-    const player = await cliente.getPlayer("#JJJYLG09")
+    const player = await cliente.getPlayer("#2U8P8QUUY")
     const club = await cliente.getClub(player.club.tag)
 
     const embed = new EmbedBuilder()

@@ -42,7 +42,7 @@ const {
 
   const client = new Client({
     intents: [Object.keys(GatewayIntentBits)],
-    partials: [Object.keys(Partials)],
+    partials: [Object.keys(Partials), Partials.Channel],
     allowedMentions: {
         parse: ["users"]
       },
@@ -101,8 +101,7 @@ const {
       const canal = client.channels.cache.get('1023384595208601684')
 
       canal.send({ files: [{ attachment: output, name: `${member.id}.png`}], content: `- ${member} Bienvenido a **Team KNX** <:knx:908715123034689596>\n- Recuerda leer las <#700911264645513226> <:KNX_PinGood:775086872850333726>\n- Visita <#1016169722296938517> para obtener información sobre el servidor <:KNX_PinThanks:775086795851038740>.` })
-
-      member.roles.add('1023271152753319967') // Atunero
+      
       member.roles.add('756836206083309568') // Colores
       member.roles.add('713630239653363755') // Aportación
       member.roles.add('729529480531542107') // Niveles
@@ -251,34 +250,30 @@ const {
   })
 
   client.on(Events.MessageCreate, async (message) => {
-    if (message.content.includes('Sia')){
+    if (message.content == 'Sia') {
       if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'Odiar a Sia es significado de saber de música.'})
-    } else if (message.content.includes('Coneja')){
+    } else if (message.content == 'Coneja'){
       if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'Odiar a Sia es significado de saber de música.'})
-    }
-    if (message.content === 'restart') {
-        if (message.member.roles.cache.has("725731790333149197")) {
-            require("child_process").exec("pm2 restart 4");
-            
-            const embed = new EmbedBuilder()
-                .setTitle(`Reiniciando Knx Manager`)
-                .setDescription('Se están volviendo a recargar todos los comandos de bots y también todos los eventos del bot.')
-                .setColor('Red');
-  
-            const boton = new ActionRowBuilder()
-                .addComponents(
-                    new ButtonBuilder()
-                        .setCustomId('reinicio')
-                        .setLabel(` `)
-                        .setStyle(ButtonStyle.Secondary)
-                        .setEmoji('1105527193901207632')
-                        .setDisabled(true)
-                );
-            
-            message.reply({ embeds: [embed], components: [boton] });
-        }
+    } else if (message.content == 'kiri'){
+      if(message.author.id === '946554175037276190') return;
+      message.reply({ content: 'El más calbo del mundo <:KNX_Monito:1138851761675841676>'})
+    } else if (message.content == 'Kiri'){
+      if(message.author.id === '946554175037276190') return;
+      message.reply({ content: 'El más calbo del mundo <:KNX_Monito:1138851761675841676>'})
+    } else if (message.content == 'Marvos') {
+      if(message.author.id === '946554175037276190') return;
+      message.reply({ content: 'Es Markos monguer'})
+    } else if (message.content  == 'zero'){
+      if(message.author.id === '946554175037276190') return;
+      message.reply({ content: 'Es Zer0, no Zero'})
+    } else if (message.content == 'Zero'){
+      if(message.author.id === '946554175037276190') return;
+      message.reply({ content: 'Es Zer0, no Zero'})
+    } else if (message.content == 'Hola'){
+      if(message.author.id === '946554175037276190') return;
+      message.reply({ content: 'Tu nariz contra mis bolas'})
     }
 });
 // RESETEO AUTOMATICO XP
