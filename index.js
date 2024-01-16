@@ -250,30 +250,27 @@ const {
   })
 
   client.on(Events.MessageCreate, async (message) => {
+    if(message.author.id === '946554175037276190') return;
     if (message.content == 'Sia') {
-      if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'Odiar a Sia es significado de saber de música.'})
     } else if (message.content == 'Coneja'){
-      if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'Odiar a Sia es significado de saber de música.'})
     } else if (message.content == 'kiri'){
-      if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'El más calbo del mundo <:KNX_Monito:1138851761675841676>'})
     } else if (message.content == 'Kiri'){
-      if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'El más calbo del mundo <:KNX_Monito:1138851761675841676>'})
     } else if (message.content == 'Marvos') {
-      if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'Es Markos monguer'})
     } else if (message.content  == 'zero'){
-      if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'Es Zer0, no Zero'})
     } else if (message.content == 'Zero'){
-      if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'Es Zer0, no Zero'})
     } else if (message.content == 'Hola'){
-      if(message.author.id === '946554175037276190') return;
       message.reply({ content: 'Tu nariz contra mis bolas'})
+    } else if (message.content == 'Sara'){
+      message.reply({ content: 'La q lo deja todo pal final'})
+    } else if (message.content == 'Sara'){
+      message.reply({ content: 'La q lo deja todo pal final'})
     }
 });
 // RESETEO AUTOMATICO XP

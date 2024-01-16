@@ -18,7 +18,7 @@ module.exports = {
             .setColor("Blurple")
             .setDescription(message);
 
-            await interaction.reply({ embeds: [embed], ephemeral: true });
+            await interaction.reply({ embeds: [embed] });
         }
 
         if(interaction.member.id !== '817515739711406140') return await sendMessage(`Solo el desarrollador puede usar este comando`)
@@ -41,7 +41,7 @@ module.exports = {
             .setColor("Blurple")
             .setDescription(replyString);
 
-            await interaction.editReply({ content: ``, embeds: [embed], ephemeral: true })
+            await interaction.editReply({ content: ``, embeds: [embed] })
         } else {
             await sendMessage(replyString);
         }

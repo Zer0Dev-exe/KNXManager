@@ -9,6 +9,12 @@ module.exports = {
         subcommand
         .setName('ver')
         .setDescription('Ver Fragmentos')
+        .addUserOption(option => 
+            option
+            .setName('usuario')
+            .setDescription('Usuario que seas mirar')
+            .setRequired(true)
+        )
     )
     .addSubcommand(subcommand =>
         subcommand
@@ -77,16 +83,18 @@ module.exports = {
 
         if(interaction.options.getSubcommand() === 'ver') {
 
-            const data = await schema.findOne({ Usuario: interaction.user.id })
+            const usuario = interaction.options.getUser('usuario')
+
+            const data = await schema.findOne({ Usuario: usuario.id })
 
             if(!data) {
                 interaction.reply('No tienes ningún fragmento!')
             } else {
                 const embed = new EmbedBuilder()
                 .setColor('#c03498')
-                .setTitle(`Fragmentos de ${interaction.user.displayName}`)
+                .setTitle(`Fragmentos de ${usuario.displayName}`)
                 .setImage('https://media.discordapp.net/attachments/936591912079618089/1182060021253669026/Fragmentos_KNX.png?ex=6583522e&is=6570dd2e&hm=a43c6a2e66911fd664ce122352fe45f56c73868476eb35ea6b4012c265580ab4&=&format=webp&quality=lossless&width=768&height=256')
-                .setThumbnail(interaction.member.displayAvatarURL())
+                .setThumbnail(usuario.displayAvatarURL())
                 .setDescription('<a:Estrellas10:1156946836691619930> *Colecciona la mayor cantidad de fragmentos posibles y obtén recompensas especiales* <a:Estrellas10:1156946836691619930>')
                 .addFields(
                     { name: 'Fragmentos Comunes', value: `- <a:Estrellas10:1156946836691619930> ${data.Comunes}`, inline: true },
