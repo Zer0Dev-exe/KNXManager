@@ -6,6 +6,9 @@ const dropSchema = require('../../Schemas/dropSchema.js')
 const tDrop = require('../../Schemas/ticketDropSchema.js')
 const syncSchema = require('../../Schemas/syncSchema.js')
 const ticketSupSchema = require('../../Schemas/ticketSupSync.js')
+const BrawlStars = require("brawlstars.js")
+const tokenbrawl = process.env.APITOKEN
+const cliente = new BrawlStars.Client(tokenbrawl)
 
 const wait = require('node:timers/promises').setTimeout;
 
@@ -168,6 +171,243 @@ module.exports = {
         } else if (values === "6") { // Change here
           return interaction.reply({ embeds: [seis], ephemeral: true})
         }
+
+      } else if(interaction.customId === "infoclubs") {
+        const values = interaction.values[0];
+        const team = await cliente.getClub('#CV8QU2VC')
+        const crew = await cliente.getClub('#29VL2Q2P2')
+
+        if(values === 'team-knx') {
+          let presiteam = team.members.find(member => member.role === 'president');
+          let viceteam = team.members.find(member => member.role === 'vicePresident');
+
+          var typeTeam = team.type
+          if(typeTeam === "inviteOnly") typeTeam = "Solo Invitacion"
+          if(typeTeam === "open") typeTeam = "Abierto"
+          if(typeTeam === "closed") typeTeam = "Cerrado"
+
+          const miembrosplus = team.members.sort((a, b) => b.trophies - a.trophies).slice(0, 5)
+          const miembrosminus = team.members.sort((a, b) => a.trophies - b.trophies).slice(0, 5)
+
+          if(team.memberCount === 30) {
+
+            const boton = new ActionRowBuilder()
+            .addComponents(
+              new ButtonBuilder()
+              .setLabel(`Estado: Lleno`)
+              .setCustomId('test1')
+              .setEmoji('1202693264700870686')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true),
+              new ButtonBuilder()
+              .setLabel(`Miembros Club`)
+              .setCustomId('lista-knx')
+              .setEmoji('1202693897306898492')
+              .setStyle(ButtonStyle.Danger)
+            )
+
+            const embed = new EmbedBuilder()
+            .setDescription(` \`\`\`Team KNX 👑 | Sin Toxicidad ❌ | Eventos y Sorteos 💲 \`\`\` `)
+            .setThumbnail(`https://cdn-old.brawlify.com/club/${team.badgeId}.png`)
+            .setColor('#ff3a25')
+            .addFields(
+              { name: 'Trofeos Totales', value: `<:trophy:1178100595530420355> \`${team.trophies}\``, inline: true },
+              { name: 'Trofeos Requeridos', value: `<:reseteo:1178100588114882652> \`${team.requiredTrophies}\``, inline: true},
+              { name: 'Media Trofeos', value: `<:trophy:1178100595530420355> \`${Math.floor(team.trophies/team.memberCount)}\``, inline: true},
+              { name: 'Miembros', value: `<:BrawlStars:1001445217993498634> \`${team.memberCount}/30\``, inline: true },
+              { name: 'Estado', value: `:envelope: \`${typeTeam}\``, inline: true },
+              { name: 'Presidente', value: `<:Presi:1202692085019447377> \`${presiteam.trophies}\` ${presiteam.name}`, inline: false },
+              { name: 'Vice Presidente', value: `<:VicePresi:1202692129827328082> \`${viceteam.trophies}\` ${viceteam.name}`, inline: true },
+              { name: ' ', value: ' ', inline: false }
+            )
+            .setAuthor({ name: `${team.name} ${team.tag}`, iconURL: `https://cdn-old.brawlify.com/club/${team.badgeId}.png`})
+
+            const membersField = miembrosplus.map((member) => {
+              const { name, trophies } = member
+              return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+            }).join('\n')
+    
+            const membersField2 = miembrosminus.map((member) => {
+              const { name, trophies } = member
+              return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+            }).join('\n')
+        
+            embed.addFields(
+              { name: 'Miembros Altos', value: `${membersField}`, inline: true },
+              { name: 'Miembros Bajos', value: `${membersField2}`, inline: true }
+            )
+
+            interaction.reply({ embeds: [embed], components: [boton], ephemeral: true })
+
+          }
+          
+          if(team.memberCount < 30) {
+
+            const boton = new ActionRowBuilder()
+            .addComponents(
+              new ButtonBuilder()
+              .setLabel(`Estado: Abierto`)
+              .setCustomId('test1')
+              .setEmoji('1202693264700870686')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true),
+              new ButtonBuilder()
+              .setLabel(`Miembros Club`)
+              .setCustomId('lista-knx')
+              .setEmoji('1202693897306898492')
+              .setStyle(ButtonStyle.Danger)
+            )
+
+            const embed = new EmbedBuilder()
+            .setDescription(` \`\`\`Team KNX 👑 | Sin Toxicidad ❌ | Eventos y Sorteos 💲 \`\`\` `)
+            .setThumbnail(`https://cdn-old.brawlify.com/club/${team.badgeId}.png`)
+            .setColor('#ff3a25')
+            .addFields(
+              { name: 'Trofeos Totales', value: `<:trophy:1178100595530420355> \`${team.trophies}\``, inline: true },
+              { name: 'Trofeos Requeridos', value: `<:reseteo:1178100588114882652> \`${team.requiredTrophies}\``, inline: true},
+              { name: 'Media Trofeos', value: `<:trophy:1178100595530420355> \`${Math.floor(team.trophies/team.memberCount)}\``, inline: true},
+              { name: 'Miembros', value: `<:BrawlStars:1001445217993498634> \`${team.memberCount}/30\``, inline: true },
+              { name: 'Estado', value: `:envelope: \`${typeTeam}\``, inline: true },
+              { name: 'Presidente', value: `<:Presi:1202692085019447377> \`${presiteam.trophies}\` ${presiteam.name}`, inline: false },
+              { name: 'Vice Presidente', value: `<:VicePresi:1202692129827328082> \`${viceteam.trophies}\` ${viceteam.name}`, inline: true },
+              { name: ' ', value: ' ', inline: false }
+            )
+            .setAuthor({ name: `${team.name} ${team.tag}`, iconURL: `https://cdn-old.brawlify.com/club/${team.badgeId}.png`})
+
+            const membersField = miembrosplus.map((member) => {
+              const { name, trophies } = member
+              return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+            }).join('\n')
+    
+            const membersField2 = miembrosminus.map((member) => {
+              const { name, trophies } = member
+              return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+            }).join('\n')
+        
+            embed.addFields(
+              { name: 'Miembros Altos', value: `${membersField}`, inline: true },
+              { name: 'Miembros Bajos', value: `${membersField2}`, inline: true }
+            )
+
+            interaction.reply({ embeds: [embed], components: [boton], ephemeral: true })
+
+          }
+
+        } else if(values === 'crew-knx') {
+          let presicrew = crew.members.find(member => member.role === 'president');
+          let vicecrew = crew.members.find(member => member.role === 'vicePresident');
+
+          var typeCrew = crew.type
+          if(typeCrew === "inviteOnly") typeCrew = "Solo Invitacion"
+          if(typeCrew === "open") typeCrew = "Abierto"
+          if(typeCrew === "closed") typeCrew = "Cerrado"
+
+          const miembrosplus = crew.members.sort((a, b) => b.trophies - a.trophies).slice(0, 5)
+          const miembrosminus = crew.members.sort((a, b) => a.trophies - b.trophies).slice(0, 5)
+
+          if(crew.memberCount === 30) {
+
+            const boton = new ActionRowBuilder()
+            .addComponents(
+              new ButtonBuilder()
+              .setLabel(`Estado: Lleno`)
+              .setCustomId('test1')
+              .setEmoji('1202693264700870686')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true),
+              new ButtonBuilder()
+              .setLabel(`Miembros Club`)
+              .setCustomId('lista-crew')
+              .setEmoji('1202693897306898492')
+              .setStyle(ButtonStyle.Danger)
+            )
+
+            const embed = new EmbedBuilder()
+            .setDescription(` \`\`\`Crew KNX 👑 | Sin Toxicidad ❌ | Eventos y Sorteos 💲 \`\`\` `)
+            .setThumbnail(`https://cdn-old.brawlify.com/club/${crew.badgeId}.png`)
+            .setColor('#ff3a25')
+            .addFields(
+              { name: 'Trofeos Totales', value: `<:trophy:1178100595530420355> \`${crew.trophies}\``, inline: true },
+              { name: 'Trofeos Requeridos', value: `<:reseteo:1178100588114882652> \`${crew.requiredTrophies}\``, inline: true},
+              { name: 'Media Trofeos', value: `<:trophy:1178100595530420355> \`${Math.floor(crew.trophies/crew.memberCount)}\``, inline: true},
+              { name: 'Miembros', value: `<:BrawlStars:1001445217993498634> \`${crew.memberCount}/30\``, inline: true },
+              { name: 'Estado', value: `:envelope: \`${typeCrew}\``, inline: true },
+              { name: 'Presidente', value: `<:Presi:1202692085019447377> \`${presicrew.trophies}\` ${presicrew.name}`, inline: false },
+              { name: 'Vice Presidente', value: `<:VicePresi:1202692129827328082> \`${vicecrew.trophies}\` ${vicecrew.name}`, inline: true },
+              { name: ' ', value: ' ', inline: false }
+            )
+            .setAuthor({ name: `${crew.name} ${crew.tag}`, iconURL: `https://cdn-old.brawlify.com/club/${crew.badgeId}.png`})
+
+            const membersField = miembrosplus.map((member) => {
+              const { name, trophies } = member
+              return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+            }).join('\n')
+    
+            const membersField2 = miembrosminus.map((member) => {
+              const { name, trophies } = member
+              return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+            }).join('\n')
+        
+            embed.addFields(
+              { name: 'Miembros Altos', value: `${membersField}`, inline: true },
+              { name: 'Miembros Bajos', value: `${membersField2}`, inline: true }
+            )
+
+            interaction.reply({ embeds: [embed], components: [boton], ephemeral: true })
+          }
+          
+          if(crew.memberCount < 30) {
+
+            const boton = new ActionRowBuilder()
+            .addComponents(
+              new ButtonBuilder()
+              .setLabel(`Estado: Abierto`)
+              .setCustomId('test1')
+              .setEmoji('1202693264700870686')
+              .setStyle(ButtonStyle.Secondary)
+              .setDisabled(true),
+              new ButtonBuilder()
+              .setLabel(`Miembros Club`)
+              .setCustomId('lista-crew')
+              .setEmoji('1202693897306898492')
+              .setStyle(ButtonStyle.Danger)
+            )
+
+            const embed = new EmbedBuilder()
+            .setDescription(` \`\`\`Crew KNX 👑 | Sin Toxicidad ❌ | Eventos y Sorteos 💲 \`\`\` `)
+            .setThumbnail(`https://cdn-old.brawlify.com/club/${crew.badgeId}.png`)
+            .setColor('#ff3a25')
+            .addFields(
+              { name: 'Trofeos Totales', value: `<:trophy:1178100595530420355> \`${crew.trophies}\``, inline: true },
+              { name: 'Trofeos Requeridos', value: `<:reseteo:1178100588114882652> \`${crew.requirewdTrophies}\``, inline: true},
+              { name: 'Media Trofeos', value: `<:trophy:1178100595530420355> \`${Math.floor(crew.trophies/crew.memberCount)}\``, inline: true},
+              { name: 'Miembros', value: `<:BrawlStars:1001445217993498634> \`${crew.memberCount}/30\``, inline: true },
+              { name: 'Estado', value: `:envelope: \`${typeCrew}\``, inline: true },
+              { name: 'Presidente', value: `<:Presi:1202692085019447377> \`${presicrew.trophies}\` ${presicrew.name}`, inline: false },
+              { name: 'Vice Presidente', value: `<:VicePresi:1202692129827328082> \`${vicecrew.trophies}\` ${vicecrew.name}`, inline: true },
+              { name: ' ', value: ' ', inline: false }
+            )
+            .setAuthor({ name: `${crew.name} ${crew.tag}`, iconURL: `https://cdn-old.brawlify.com/club/${crew.badgeId}.png`})
+
+            const membersField = miembrosplus.map((member) => {
+              const { name, trophies } = member
+              return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+            }).join('\n')
+    
+            const membersField2 = miembrosminus.map((member) => {
+              const { name, trophies } = member
+              return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+            }).join('\n')
+        
+            embed.addFields(
+              { name: 'Miembros Altos', value: `${membersField}`, inline: true },
+              { name: 'Miembros Bajos', value: `${membersField2}`, inline: true }
+            )
+
+            interaction.reply({ embeds: [embed], components: [boton], ephemeral: true })
+          }
+        }
+
 
       } else if(interaction.customId === "osoporte") {
         const values = interaction.values[0];
@@ -1257,12 +1497,7 @@ module.exports = {
           await dropSchema.deleteMany({ guildId: interaction.guild.id})
           await interaction.editReply({ content: 'Listo', ephemeral: true })
         }
-      } else if (interaction.customId == "lista-miembros") {
-
-        require('dotenv').config()
-        const token = process.env.APITOKEN
-        const BrawlStars = require("brawlstars.js")
-        const cliente = new BrawlStars.Client(token)
+      } else if (interaction.customId == "lista-knx") {
         const club = await cliente.getClub('#CV8QU2VC')
         
         const miembrosplus = club.members.sort((a, b) => b.trophies - a.trophies)
@@ -1273,14 +1508,36 @@ module.exports = {
         }).join('\n')
 
         const embed = new EmbedBuilder()
-        .setTitle('Miembros Club KNX')
+        .setTitle('<:club:1178100590002307122> Miembros Team KNX <:club:1178100590002307122>')
+        .setAuthor({ name: club.name, iconURL: `https://cdn-old.brawlify.com/club/${club.badgeId}.png`})
         .setDescription(membersField)
-        .setColor('#b96eff')
+        .setColor('Red')
         .setThumbnail(`${interaction.guild.iconURL()}`)
         .setFooter({ text: 'Esta es la lista extraida del Club', iconURL: `${interaction.guild.iconURL()}`})
 
         interaction.reply({ embeds: [embed], ephemeral: true  })
       // SYNC BRAWL
+
+      } else if (interaction.customId == "lista-crew") {
+      
+        const club = await cliente.getClub('#29VL2Q2P2')
+          
+        const miembrosplus = club.members.sort((a, b) => b.trophies - a.trophies)
+
+        const membersField = miembrosplus.map((member) => {
+          const { name, trophies } = member
+          return `<:reseteo:1178100588114882652> \`${trophies}\` | \`${name}\``
+        }).join('\n')
+
+        const embed = new EmbedBuilder()
+        .setTitle('<:club:1178100590002307122> Miembros Crew KNX <:club:1178100590002307122>')
+        .setAuthor({ name: club.name, iconURL: `https://cdn-old.brawlify.com/club/${club.badgeId}.png`})
+        .setDescription(membersField)
+        .setColor('Red')
+        .setThumbnail(`${interaction.guild.iconURL()}`)
+        .setFooter({ text: 'Esta es la lista extraida del Club', iconURL: `${interaction.guild.iconURL()}`})
+
+        interaction.reply({ embeds: [embed], ephemeral: true  })
 
       } else if (interaction.customId == "sync") {
 

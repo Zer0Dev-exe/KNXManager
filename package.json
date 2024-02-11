@@ -16,7 +16,8 @@
     "mongoose": "^6.4.6",
     "musicard": "^1.5.2",
     "puppeteer": "^21.6.1",
-    "riffy": "^1.0.3"
+    "riffy": "^1.0.3",
+    "rsnchat": "^3.0.7"
   },
   "name": "knxmanager",
   "version": "1.0.0",

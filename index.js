@@ -15,11 +15,13 @@ const {
     ChannelType,
     PermissionsBitField,
     GatewayDispatchEvents,
-    AttachmentBuilder
+    AttachmentBuilder,
+    SelectMenuBuilder
   } = require("discord.js");
   
   const { loadEvents } = require("./Handlers/cargarEventos");
   const { loadCommands } = require("./Handlers/cargarComandos");
+  const { loadPrefix } = require('./Handlers/cargarPrefix');
   const { readdirSync } = require("fs");
   const process = require('node:process');
   const token = process.env.TOKEN;
@@ -27,6 +29,9 @@ const {
   const { welcomeCard } = require('greetify')
   const fs = require("fs");
   const wait = require('node:timers/promises').setTimeout;
+  const BrawlStars = require("brawlstars.js")
+  const tokenbrawl = process.env.APITOKEN
+  const cliente = new BrawlStars.Client(tokenbrawl)
 
   process.on('unhandledRejection', async (reason, promise) => {
     console.log('Unhandled Rejection error at:', promise, 'reason', reason);
@@ -58,25 +63,14 @@ const {
     })
   })
   client.commands = new Collection();
-  //client.commandaliases = new Collection(); // prefix
-  
+  client.prefixs = new Collection();
+  client.aliases = new Collection();
   
   client.login(token).then(() => {
     loadEvents(client);
     loadCommands(client);
+    loadPrefix(client)
   });
-
-  //readdirSync('./comandosprefix').forEach((file) => {
-    //const command = require(`./comandosprefix/${file}`);
-        //if (command) {
-            //client.commands.set(command.name, command);
-        //if (command.aliases && Array.isArray(command.aliases)) {
-            //command.aliases.forEach((alias) => {
-            //client.commandaliases.set(alias, command.name);
-        //});
-    //}
-    //}
-    //});
 
   module.exports = client;
 
@@ -263,9 +257,13 @@ const {
       message.reply({ content: 'Es Markos monguer'})
     } else if (message.content  == 'zero'){
       message.reply({ content: 'Es Zer0, no Zero'})
+    } else if (message.content  == 'zer0'){
+      message.react('1190423169127940286')
     } else if (message.content == 'Zero'){
       message.reply({ content: 'Es Zer0, no Zero'})
-    } else if (message.content == 'Hola'){
+    } else if (message.content  == 'Zer0'){
+      message.react('1190423169127940286')
+    }else if (message.content == 'Hola'){
       message.reply({ content: 'Tu nariz contra mis bolas'})
     } else if (message.content == 'Sara'){
       message.reply({ content: 'La q lo deja todo pal final'})
@@ -291,6 +289,76 @@ async function servidor() {
 
  return standings
 }
+
+setInterval(async () => {
+
+  const canal = client.channels.cache.get('1090102018305175552')
+  const mensaje = await canal.messages.fetch('1203753016625340446')
+  const guild = client.guilds.cache.get('698544143403581501')
+
+  const team = await cliente.getClub('#CV8QU2VC')
+  const crew = await cliente.getClub('#29VL2Q2P2')
+
+  let presiteam = team.members.find(member => member.role === 'president');
+  let viceteam = team.members.find(member => member.role === 'vicePresident');
+
+  let presicrew = crew.members.find(member => member.role === 'president');
+  let vicecrew = crew.members.find(member => member.role === 'vicePresident');
+
+  var typeTeam = team.type
+  if(typeTeam === "inviteOnly") typeTeam = "Solo Invitacion"
+  if(typeTeam === "open") typeTeam = "Abierto"
+  if(typeTeam === "closed") typeTeam = "Cerrado"
+
+  var typeCrew = crew.type
+  if(typeCrew === "inviteOnly") typeCrew = "Solo Invitacion"
+  if(typeCrew === "open") typeCrew = "Abierto"
+  if(typeCrew === "closed") typeCrew = "Cerrado"
+
+  const embed = new EmbedBuilder()
+  .setTitle('Clubes de Team KNX <:club:1178100590002307122>')
+  .addFields(
+    { name: '<:IconKNX:1202734474664870029> TEAM KNX', value: `**:dart: ${team.tag}\n<:trophy:1178100595530420355> ${team.trophies}\n<:MiembrosClan:1202693897306898492> ${team.memberCount}/30\n<:reseteo:1178100588114882652> ${Math.floor(team.trophies/team.memberCount)}\n:warning: ${typeTeam}\n<:Presi:1202692085019447377> ${presiteam.name}\n<:VicePresi:1202692129827328082> ${viceteam.name}**`, inline: true },
+    { name: '<:IconKNX:1202734474664870029> CREW KNX', value: `**:dart: ${crew.tag}\n<:trophy:1178100595530420355> ${crew.trophies}\n<:MiembrosClan:1202693897306898492> ${crew.memberCount}/30\n<:reseteo:1178100588114882652> ${Math.floor(crew.trophies/crew.memberCount)}\n:warning: ${typeCrew}\n<:Presi:1202692085019447377> ${presicrew.name}\n<:VicePresi:1202692129827328082> ${vicecrew.name}**`, inline: true }
+  )
+  .setThumbnail(guild.iconURL())
+  .setColor('#25fff8')
+
+  const botones = new ActionRowBuilder()
+  .addComponents(
+    new ButtonBuilder()
+    .setStyle(ButtonStyle.Link)
+    .setLabel('Team KNX')
+    .setURL('https://bit.ly/42cng2y')
+    .setEmoji('1202734474664870029'),
+    new ButtonBuilder()
+    .setStyle(ButtonStyle.Link)
+    .setLabel('Crew KNX')
+    .setURL('https://bit.ly/3HwGoyK')
+    .setEmoji('1202734474664870029'),
+  )
+  const clubes = new ActionRowBuilder()
+  .addComponents(
+  new SelectMenuBuilder()
+  .setCustomId('infoclubs')
+  .setPlaceholder('Ver informacion completa de Clubes ⚔️')
+  .addOptions([
+    {
+      label: 'Team KNX',
+      emoji: '1202734474664870029',
+      description: 'Información del club Team KNX',
+      value: 'team-knx',
+    },
+    {
+      label: 'Crew KNX',
+      emoji: '1202734474664870029',
+      description: 'Información del club Crew KNX',
+      value: 'crew-knx',
+    },
+  ]),
+  )
+  mensaje.edit({ embeds: [embed], components: [clubes, botones] })
+}, 5000);
 
 setInterval(async () => {
   const userSchema = require('./Schemas/msgLbSchema')
