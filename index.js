@@ -32,6 +32,7 @@ const {
   const BrawlStars = require("brawlstars.js")
   const tokenbrawl = process.env.APITOKEN
   const cliente = new BrawlStars.Client(tokenbrawl)
+  const Twit = require('twit');
 
   process.on('unhandledRejection', async (reason, promise) => {
     console.log('Unhandled Rejection error at:', promise, 'reason', reason);
