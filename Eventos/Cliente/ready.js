@@ -20,9 +20,9 @@ module.exports = {
         if (!mongodbURL) return;
         const nodes = [
             {
-                host: "185.255.5.126",
-                password: "blubpubliclava",
-                port: "5500",
+                host: "node.raidenbot.xyz",
+                password: "pwd",
+                port: "5501",
                 secure: false
             },
           ];
@@ -32,8 +32,8 @@ module.exports = {
                   const guild = client.guilds.cache.get(payload.d.guild_id);
                   if (guild) guild.shard.send(payload);
               },
-              defaultSearchPlatform: "ytsearch", // <--- Change here
-              restVersion: "v3" // or v3 based on your lavalink version
+              defaultSearchPlatform: "ytmsearch", // <--- Change here
+              restVersion: "v4" // or v3 based on your lavalink version
           });
 
         client.riffy.init(client.user.id);

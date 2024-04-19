@@ -54,7 +54,7 @@ module.exports = {
                         allow:[PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory],
                     },
                     {
-                        id: '700884332759482409',
+                        id: '1151529419106685090',
                         allow:[PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory, PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ManageChannels],
                     }
                 ]
@@ -83,7 +83,7 @@ module.exports = {
                         allow:[PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory, PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ManageChannels],
                     },
                     {
-                        id: '700884332759482409',
+                        id: '1151529419106685090',
                         allow:[PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory, PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ManageChannels],
                     }
                 ]

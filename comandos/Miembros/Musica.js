@@ -87,7 +87,7 @@ module.exports = {
              * 3. Replace "track" with "TRACK_LOADED" 
              */
     
-            if (loadType === 'PLAYLIST_LOADED') {
+            if (loadType === 'playlist') {
                 for (const track of resolve.tracks) {
                     track.info.requester = interaction.member;
                     player.queue.add(track);
@@ -105,7 +105,7 @@ module.exports = {
                 interaction.reply({ embeds: [embed]});
                 if (!player.playing && !player.paused) return player.play();
     
-            } else if (loadType === 'SEARCH_RESULT' || loadType === 'TRACK_LOADED') {
+            } else if (loadType === 'search' || loadType === 'track') {
                 const track = tracks.shift();
                 track.info.requester = interaction.member;
     

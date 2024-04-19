@@ -33,6 +33,7 @@ const {
   const tokenbrawl = process.env.APITOKEN
   const cliente = new BrawlStars.Client(tokenbrawl)
   const Twit = require('twit');
+  const clubSchema = require('./Schemas/clubLogsSchema.js')
 
   process.on('unhandledRejection', async (reason, promise) => {
     console.log('Unhandled Rejection error at:', promise, 'reason', reason);
@@ -82,26 +83,16 @@ const {
       const cantidad = client.guilds.cache.get('698544143403581501').memberCount
       const vc = client.channels.cache.get('1086073757883432990')
 
-      const card = new welcomeCard()
-      .setName(member.user.username)
-      .setAvatar(member.user.displayAvatarURL({ format: 'png' }))
-      .setMessage(`Atunero número ${cantidad}`)
-      .setBackground('https://media.discordapp.net/attachments/936591912079618089/1182724414744318172/Plantilla_KNXSecond.png?ex=6585bcf2&is=657347f2&hm=1715a710ed7939c3845acea0d5dc7d181150b6996a5d96a9d467461973b03d9c&=&format=webp&quality=lossless&width=768&height=432')
-      .setColor('f9f9f9')
-      .setTitle('Bienvenido!')
-
-      const output = await card.build();
-      fs.writeFileSync("card.png", output);
-
       const canal = client.channels.cache.get('1023384595208601684')
 
-      canal.send({ files: [{ attachment: output, name: `${member.id}.png`}], content: `- ${member} Bienvenido a **Team KNX** <:knx:908715123034689596>\n- Recuerda leer las <#700911264645513226> <:KNX_PinGood:775086872850333726>\n- Visita <#1016169722296938517> para obtener información sobre el servidor <:KNX_PinThanks:775086795851038740>.` })
+      canal.send({ content: `- ${member} Bienvenido a **Team KNX** <:knx:908715123034689596>\n- Recuerda leer las <#700911264645513226> <:KNX_PinGood:775086872850333726>\n- Visita <#1016169722296938517> para obtener información sobre el servidor <:KNX_PinThanks:775086795851038740>.` })
       
       member.roles.add('756836206083309568') // Colores
       member.roles.add('713630239653363755') // Aportación
       member.roles.add('729529480531542107') // Niveles
       member.roles.add('713630239363956806') // Basico
       member.roles.add('754816313775489154') // Autoroles
+      member.roles.add('1023271152753319967') // Atunero
 
       vc.setName(`Miembros: ${cantidad}`)
     } else {
@@ -264,16 +255,30 @@ const {
       message.reply({ content: 'Es Zer0, no Zero'})
     } else if (message.content  == 'Zer0'){
       message.react('1190423169127940286')
-    }else if (message.content == 'Hola'){
-      message.reply({ content: 'Tu nariz contra mis bolas'})
     } else if (message.content == 'Sara'){
       message.reply({ content: 'La q lo deja todo pal final'})
     } else if (message.content == 'Sara'){
       message.reply({ content: 'La q lo deja todo pal final'})
+    } else if (message.content.includes('club')){
+      const boton = new ActionRowBuilder()
+      .addComponents(
+        new ButtonBuilder()
+        .setStyle(ButtonStyle.Link)
+        .setLabel('Team KNX')
+        .setURL('https://bit.ly/42cng2y')
+        .setEmoji('1202734474664870029'),
+        new ButtonBuilder()
+        .setStyle(ButtonStyle.Link)
+        .setLabel('Crew KNX')
+        .setURL('https://bit.ly/3HwGoyK')
+        .setEmoji('1202734474664870029'),
+      )
+      message.reply({ content: 'Puedes unirte a nuestras linea de clubes, en <#1090102018305175552> tendrán la información sobre los clubes y pueden ver los logs de los clubes en <#1213245501621674066>', components: [boton]})
     }
 });
 // RESETEO AUTOMATICO XP
-const msgLbSchema = require('./Schemas/msgLbSchema')
+const msgLbSchema = require('./Schemas/msgLbSchema');
+const interactionCreate = require('./Eventos/Interaction/interactionCreate');
 
 async function servidor() {
  var data = await msgLbSchema.find({ Guild: '698544143403581501' })
@@ -290,6 +295,128 @@ async function servidor() {
 
  return standings
 }
+
+setInterval(async () => {
+  const canal = await client.channels.cache.get('1213245501621674066')
+  const team = await cliente.getClub('#CV8QU2VC')
+  const crew = await cliente.getClub('#29VL2Q2P2')
+  const data = await clubSchema.findOne({ Servidor: '1213245501621674066'})
+  if(team.memberCount == 30) {
+    const embed = new EmbedBuilder()
+    .setColor('Red')
+    .setTitle(`${team.name} : Lleno :red_circle:`)
+    .setThumbnail(`https://cdn-old.brawlify.com/club/${team.badgeId}.png`)
+    .setDescription('Si deseas unirte a este club una vez haya hueco libre porfavor usa **k!apuntar team** en <#1016171578771374131>')
+    .setFooter({ text: 'Dentro de 1 hora se actualizará el estado de este club, si estás en la lista de espera serás notificado.'})
+    await canal.send({ embeds: [embed] })
+    data.CantidadTeam = 30
+    data.UltimaTeam = true
+    await data.save()
+  }
+
+  if(crew.memberCount == 30) {
+    const embed = new EmbedBuilder()
+    .setColor('Red')
+    .setTitle(`${crew.name} : Lleno :red_circle:`)
+    .setThumbnail(`https://cdn-old.brawlify.com/club/${crew.badgeId}.png`)
+    .setDescription('Si deseas unirte a este club una vez haya hueco libre porfavor usa **k!apuntar crew** en <#1016171578771374131>')
+    .setFooter({ text: 'Dentro de 1 hora se actualizará el estado de este club, si estás en la lista de espera serás notificado.'})
+    await canal.send({ embeds: [embed] })
+    data.CantidadCrew = 30
+    data.UltimaCrew = true
+    await data.save()
+  }
+
+  if(team.memberCount < 30) {
+
+    if(data.UltimaTeam = 'true') {
+      console.log('A')
+      const cantidadLibre = 30 - team.memberCount
+      const embed = new EmbedBuilder()
+      .setColor('Green')
+      .setTitle(`${team.name} : Abierto :green_circle:`)
+      .setThumbnail(`https://cdn-old.brawlify.com/club/${team.badgeId}.png`)
+      .setDescription('Team KNX ha abierto sus puertas para nuevos miembros, usa **k!desapuntar-team** en <#1016171578771374131> en caso que ya hayas entrado al club.')
+      .addFields(
+        { name: 'Cantidad de hueco:', value: `${cantidadLibre}`}
+      )
+      .setFooter({ text: 'Dentro de 1 hora se actualizará el estado de este club.'})
+      await canal.send({ embeds: [embed] })
+      data.CantidadTeam = team.memberCount
+      data.UltimaTeam = false
+      await data.save()
+    }
+
+    if(data.UltimaTeam = 'true') {
+      console.log('B')
+      
+      let cantidadTeam = [];
+        await data.MiembrosTeam.forEach(async member => {
+            cantidadTeam.push(`<@${member}>`)
+        });
+
+      const cantidadLibre = 30 - team.memberCount
+      const embed = new EmbedBuilder()
+      .setColor('Green')
+      .setTitle(`${team.name} : Abierto :green_circle:`)
+      .setThumbnail(`https://cdn-old.brawlify.com/club/${team.badgeId}.png`)
+      .setDescription('Team KNX ha abierto sus puertas para nuevos miembros, usa **k!desapuntar team** en <#1016171578771374131> en caso que ya hayas entrado al club.')
+      .addFields(
+        { name: 'Cantidad de hueco:', value: `${cantidadLibre}`}
+      )
+      .setFooter({ text: 'Dentro de 1 hora se actualizará el estado de este club.'})
+      await canal.send({ content: `> ${cantidadTeam.join(' ').slice(0, 1020) || `No hay nadie en la lista de espera`}`, embeds: [embed] })
+
+      data.CantidadTeam = team.memberCount
+      data.UltimaTeam = false
+      await data.save()
+    }
+  }
+
+  if(crew.memberCount < 30) {
+
+    if(data.UltimaTeam = 'false') {
+      const cantidadLibre = 30 - crew.memberCount
+      const embed = new EmbedBuilder()
+      .setColor('Green')
+      .setTitle(`${crew.name} : Abierto :green_circle:`)
+      .setThumbnail(`https://cdn-old.brawlify.com/club/${crew.badgeId}.png`)
+      .setDescription('Crew KNX ha abierto sus puertas para nuevos miembros, usa **k!desapuntar crew** en <#1016171578771374131> en caso que ya hayas entrado al club.')
+      .addFields(
+        { name: 'Cantidad de hueco:', value: `${cantidadLibre}`}
+      )
+      .setFooter({ text: 'Dentro de 1 hora se actualizará el estado de este club.'})
+      await canal.send({ embeds: [embed] })
+      data.CantidadCrew = crew.memberCount
+      data.UltimaCrew = false
+      await data.save()
+    }
+
+    if(data.UltimaCrew = 'true') {
+
+      let cantidadCrew = [];
+        await data.MiembrosCrew.forEach(async member => {
+            cantidadCrew.push(`<@${member}>`)
+        });
+
+      const cantidadLibre = 30 - crew.memberCount
+      const embed = new EmbedBuilder()
+      .setColor('Green')
+      .setTitle(`${crew.name} : Abierto :green_circle:`)
+      .setThumbnail(`https://cdn-old.brawlify.com/club/${crew.badgeId}.png`)
+      .setDescription('Crew KNX ha abierto sus puertas para nuevos miembros, usa **k!desapuntar crew** en <#1016171578771374131> en caso que ya hayas entrado al club.')
+      .addFields(
+        { name: 'Cantidad de hueco:', value: `${cantidadLibre}`}
+      )
+      .setFooter({ text: 'Dentro de 1 hora se actualizará el estado de este club.'})
+      await canal.send({ content: `> ${cantidadCrew.join(' ').slice(0, 1020) || `No hay nadie en la lista de espera`}`, embeds: [embed] })
+      data.CantidadCrew = team.memberCount
+      data.UltimaCrew = false
+      await data.save()
+    }
+  }
+
+}, 3600000)
 
 setInterval(async () => {
 
@@ -385,4 +512,22 @@ setInterval(async () => {
    canal.send({ content: '<@&936405936610889738>', embeds: [embed], allowedMentions:{parse: ['users', 'roles'] } });
    await userSchema.deleteMany()
   }
- }, 604800000);
+}, 604800000);
+
+const inaData = require('./Schemas/canalInactivoSchema.js')
+const preguntas = require('./Schemas/preguntasChat.js')
+setInterval(async () => {
+  const data = await inaData.findOne({ Canal: '942082996771639327'})
+  const pregunta = await preguntas.findOne()
+
+  const canal = await client.channels.fetch('1023384595208601684')
+  await canal.messages.fetch({ limit: 1 }).then(async messages => {
+    let UltimoMensaje = messages.first()
+    if(UltimoMensaje.id === data.Mensaje) {
+      await canal.send({ content: `${pregunta.Pregunta}`, allowedMentions:{parse: ['roles'] } })
+    } else {
+      data.Mensaje = UltimoMensaje.id
+      await data.save()
+    }
+  })
+}, 7200000);
