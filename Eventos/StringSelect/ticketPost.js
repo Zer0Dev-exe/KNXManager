@@ -456,10 +456,6 @@ module.exports = {
                             parent:ticketData.categoryPostulacion,
                             permissionOverwrites: [
                                 {
-                                    id: ticketData.everyoneRol,
-                                    deny:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory]
-                                },
-                                {
                                     id: interaction.guild.roles.everyone.id,
                                     deny:[PermissionFlagsBits.ViewChannel]
                                 },
@@ -468,12 +464,12 @@ module.exports = {
                                     allow:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages, PermissionFlagsBits.ReadMessageHistory]
                                 },
                                 {
-                                    id: ticketData.admin,
+                                    id: '725731790333149197',
                                     deny:[PermissionFlagsBits.SendMessages],
                                     allow:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ReadMessageHistory]
                                 },
                                 {
-                                    id: ticketData.direccion,
+                                    id: '1151529419106685090',
                                     deny:[PermissionFlagsBits.SendMessages],
                                     allow:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ReadMessageHistory]
                                 }
@@ -504,7 +500,7 @@ module.exports = {
                             interaction.reply({ content: `Tu ticket ha sido exitosamente creado en ${channel}`, ephemeral: true })
     
                             await channel.send({ content: `${interaction.user}`, embeds: [embed], components: [button], allowedMentions:{parse: ['users'] } }).then(async (msg) => {
-                                await ticketDiscord.findOneAndUpdate({ channelId: channel.id }, { $set: { messageID: msg.id } })
+                            await ticketDiscord.findOneAndUpdate({ channelId: channel.id }, { $set: { messageID: msg.id } })
                         })
                         })
                     break;
