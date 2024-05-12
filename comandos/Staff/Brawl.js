@@ -18,7 +18,7 @@ module.exports = {
 
     const embed = new EmbedBuilder()
     .setAuthor({ name: `${player.name} ${player.tag}`, iconURL: `https://cdn-old.brawlify.com/profile/${player.icon}.png`})
-    .setColor(player.hexColor)
+    .setColor(`#${player.hexColor.toNumber()}`)
     .addFields(
       { name: 'Trofeos', value: `<:reseteo:1178100588114882652> ${player.trophies}`, inline: true },
       { name: 'Max Trofeos', value: `<:trofeosmasaltos:1178100593181601812> ${player.highestTrophies}`, inline: true },
