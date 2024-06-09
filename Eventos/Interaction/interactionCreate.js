@@ -992,16 +992,14 @@ module.exports = {
             new ButtonBuilder()
             .setCustomId('final-a')
             .setLabel('Aceptar Postulación')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('1139226067454926878'),
+            .setStyle(ButtonStyle.Secondary),
             new ButtonBuilder()
             .setCustomId('final-b')
             .setLabel('Denegar Postulación')
-            .setStyle(ButtonStyle.Secondary)
-            .setEmoji('1139226067454926878'),
+            .setStyle(ButtonStyle.Secondary),
             )
 
-            modalInteraction.reply({ embeds: [embed], components: [final], content: `<@&725731790333149197> <@&700884332759482409>`, allowedMentions:{parse: ['roles']}})
+            modalInteraction.reply({ embeds: [embed], components: [final], content: `<@&725731790333149197>`, allowedMentions:{parse: ['roles']}})
           })
           .catch((err) => {
             console.log(`Error: ${err}`)

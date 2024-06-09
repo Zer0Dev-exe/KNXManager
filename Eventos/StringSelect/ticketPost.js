@@ -247,7 +247,7 @@ module.exports = {
                             allow:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ReadMessageHistory, PermissionFlagsBits.SendMessages]
                         },
                         {
-                            id: '700884332759482409',
+                            id: '725731790333149197',
                             allow:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ReadMessageHistory, PermissionFlagsBits.ManageMessages],
                             deny:[PermissionFlagsBits.SendMessages]
                         },
@@ -285,7 +285,7 @@ module.exports = {
                             allow:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ReadMessageHistory, PermissionFlagsBits.SendMessages]
                         },
                         {
-                            id: '700884332759482409',
+                            id: '725731790333149197',
                             allow:[PermissionFlagsBits.ViewChannel, PermissionFlagsBits.ReadMessageHistory, PermissionFlagsBits.ManageMessages],
                             deny:[PermissionFlagsBits.SendMessages]
                         },
@@ -432,8 +432,7 @@ module.exports = {
                             new ButtonBuilder()
                             .setCustomId('p1-t')
                             .setLabel('Postularse')
-                            .setStyle(ButtonStyle.Secondary)
-                            .setEmoji('1139226012048171140'),
+                            .setStyle(ButtonStyle.Secondary),
                         )
                         interaction.reply({ content: `Tu ticket ha sido exitosamente creado en ${channel}`, ephemeral: true })
 
@@ -493,8 +492,7 @@ module.exports = {
                                 new ButtonBuilder()
                                 .setCustomId('p1-d')
                                 .setLabel('Postularse')
-                                .setStyle(ButtonStyle.Secondary)
-                                .setEmoji('1139226067454926878'),
+                                .setStyle(ButtonStyle.Secondary),
                             )
 
                             interaction.reply({ content: `Tu ticket ha sido exitosamente creado en ${channel}`, ephemeral: true })

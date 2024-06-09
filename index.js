@@ -237,9 +237,19 @@ const {
 
   client.on(Events.MessageCreate, async (message) => {
     if(message.author.id === '946554175037276190') return;
-    if (message.content == 'Sia') {
+    if (message.content.includes('Sia')) {
+      const opciones = ['Odiar a Sia es significado de saber de música.', 'https://media.discordapp.net/attachments/1016170618720354394/1217982945978093750/image.png?ex=666596c3&is=66644543&hm=006f50eab0faadfcfb822ff4ff40fa010cca3f34820dd1707c289c290cfe054d&=&format=webp&quality=lossless&width=222&height=96', 'https://media.discordapp.net/attachments/1016170618720354394/1173284393855504496/resultado.png?ex=6665227e&is=6663d0fe&hm=fddb289cf075b0dd39c9067f63e0779946520918cc7ba4a7b31e0563fece47e5&=&format=webp&quality=lossless&width=473&height=473', 'https://media.discordapp.net/attachments/1023384595208601684/1215451664451117106/opera_AO0c7EmKKH.png?ex=66659bd2&is=66644a52&hm=14ba69cf6f457a1cf677de1537e5c1b857fde0d750e000b187341251c0d0fe21&=&format=webp&quality=lossless&width=224&height=37']
+      const ball = Math.floor(Math.random() * opciones.length);
+
+      message.reply({ content: `${opciones[ball]}`})
+    } else if (message.content.includes('sia')) {
+      const opciones = ['Odiar a Sia es significado de saber de música.', 'https://media.discordapp.net/attachments/1016170618720354394/1217982945978093750/image.png?ex=666596c3&is=66644543&hm=006f50eab0faadfcfb822ff4ff40fa010cca3f34820dd1707c289c290cfe054d&=&format=webp&quality=lossless&width=222&height=96', 'https://media.discordapp.net/attachments/1016170618720354394/1173284393855504496/resultado.png?ex=6665227e&is=6663d0fe&hm=fddb289cf075b0dd39c9067f63e0779946520918cc7ba4a7b31e0563fece47e5&=&format=webp&quality=lossless&width=473&height=473', 'https://media.discordapp.net/attachments/1023384595208601684/1215451664451117106/opera_AO0c7EmKKH.png?ex=66659bd2&is=66644a52&hm=14ba69cf6f457a1cf677de1537e5c1b857fde0d750e000b187341251c0d0fe21&=&format=webp&quality=lossless&width=224&height=37']
+      const ball = Math.floor(Math.random() * opciones.length);
+
+      message.reply({ content: `${opciones[ball]}`})
+    } else if (message.content.includes('Coneja')) {
       message.reply({ content: 'Odiar a Sia es significado de saber de música.'})
-    } else if (message.content == 'Coneja'){
+    } else if (message.content.includes('coneja')) {
       message.reply({ content: 'Odiar a Sia es significado de saber de música.'})
     } else if (message.content == 'kiri'){
       message.reply({ content: 'El más calbo del mundo <:KNX_Monito:1138851761675841676>'})
